@@ -259,7 +259,15 @@ public class CycloneDxTask extends DefaultTask {
     }
 
     private boolean shouldSkipConfiguration(Configuration configuration) {
-        return skipConfigs.contains(configuration.getName());
+        final String configurationName = configuration.getName();
+
+        for(String skipConfigRegex : skipConfigs){
+            if (configurationName.matches(skipConfigRegex)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
